@@ -1,0 +1,496 @@
+/*
+SQLyog Ultimate v11.27 (32 bit)
+MySQL - 5.7.17-log : Database - lspoygon
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`lspoygon` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `lspoygon`;
+
+/*Table structure for table `d_contact_info` */
+
+DROP TABLE IF EXISTS `d_contact_info`;
+
+CREATE TABLE `d_contact_info` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '联络信息',
+  `no` varchar(100) DEFAULT NULL COMMENT '编号',
+  `p_id` int(10) DEFAULT NULL COMMENT '预案管理id',
+  `propertyname` varchar(100) DEFAULT NULL COMMENT '单位名称',
+  `contactname` varchar(100) DEFAULT NULL COMMENT '联系人名称',
+  `contactphone` varchar(100) DEFAULT NULL COMMENT '联系人电话',
+  `contactaddr` varchar(100) DEFAULT NULL COMMENT '联系人地址',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '维护人员',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `d_contact_info` */
+
+insert  into `d_contact_info`(`rid`,`no`,`p_id`,`propertyname`,`contactname`,`contactphone`,`contactaddr`,`oprt_id`,`create_time`,`remark`) values (1,NULL,1,'巡视1组','张三','1223243433','丽水巡视部门1组',1,'2018-03-20 15:44:48',NULL),(2,NULL,1,'巡视1组','李四','342123124','丽水巡视部门1组',1,'2018-03-20 15:44:48',NULL),(3,NULL,1,'巡视2组','赵六','2412313','丽水巡视部门2组',1,'2018-03-20 15:44:48',NULL);
+
+/*Table structure for table `d_local_realimg` */
+
+DROP TABLE IF EXISTS `d_local_realimg`;
+
+CREATE TABLE `d_local_realimg` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '现场实景图',
+  `no` varchar(100) DEFAULT NULL COMMENT '编号',
+  `p_id` int(10) DEFAULT NULL COMMENT '预案管理id',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `file` varchar(200) DEFAULT NULL COMMENT '文件路径',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '维护人员',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+/*Data for the table `d_local_realimg` */
+
+insert  into `d_local_realimg`(`rid`,`no`,`p_id`,`name`,`file`,`oprt_id`,`create_time`,`remark`) values (11,NULL,1,'现场实景图1','d:/yuan/现场实景图1.jpg',1,NULL,NULL),(12,NULL,1,'现场实景图2','d:/yuan/现场实景图2.jpg',1,NULL,NULL),(13,NULL,1,'现场实景图3','d:/yuan/现场实景图3.jpg',1,NULL,NULL),(14,NULL,1,'现场实景图4','d:/yuan/现场实景图4.jpg',1,NULL,NULL),(15,NULL,3,'现场实景图5','d:/yuan/现场实景图4.jpg',1,NULL,NULL),(16,NULL,1,'现场实景图6','d:/yuan/现场实景图4.jpg',NULL,NULL,NULL);
+
+/*Table structure for table `d_planning` */
+
+DROP TABLE IF EXISTS `d_planning`;
+
+CREATE TABLE `d_planning` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '预案文档',
+  `no` varchar(100) DEFAULT NULL COMMENT '编号',
+  `p_id` int(10) DEFAULT NULL COMMENT '预案管理id',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `file` varchar(200) DEFAULT NULL COMMENT '文件路径',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '维护人员',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `d_planning` */
+
+insert  into `d_planning`(`rid`,`no`,`p_id`,`name`,`file`,`oprt_id`,`create_time`,`remark`) values (4,NULL,1,'预案1.doc','d:/yuan/预案1.doc',1,NULL,NULL),(5,NULL,1,'预案2.doc','d:/yuan/预案2.doc',1,NULL,NULL),(6,NULL,1,'预案3.doc','d:/yuan/预案3.doc',1,NULL,NULL),(7,NULL,3,'预案3.doc','d:/yuan/预案3.doc',1,NULL,NULL),(8,NULL,3,'','d:/yuan/预案2.doc',1,NULL,NULL);
+
+/*Table structure for table `d_safe_condition` */
+
+DROP TABLE IF EXISTS `d_safe_condition`;
+
+CREATE TABLE `d_safe_condition` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '注意事项',
+  `no` varchar(100) DEFAULT NULL COMMENT '编号',
+  `name` varchar(200) DEFAULT NULL COMMENT '名称',
+  `p_id` int(10) DEFAULT NULL COMMENT '预案管理id',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '维护人员',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `d_safe_condition` */
+
+insert  into `d_safe_condition`(`rid`,`no`,`name`,`p_id`,`oprt_id`,`create_time`,`remark`) values (1,NULL,'001',2,1,'2018-03-20 15:42:16','在巡视丽温2Q67线时请注意拿好防水设备，线路在山区，天气容易变化。'),(2,NULL,'002',2,1,'2018-03-20 15:44:39','沿线路的地面是否堆放有易燃、易爆或强烈腐蚀性物质；沿线路附近有无危险建筑物，有无在雷雨或大风天气可能对线路造成危害的建筑物及其他设施：线路上有无树枝、风筝、鸟巢等杂物，如有应设法清除。'),(3,NULL,'003',1,1,'2018-03-20 15:42:16','电杆有无倾斜、变形、腐朽、损坏及基础下沉等现象；横担和金具是否移位、固定是否牢固、焊缝是否开裂、是否缺少螺母等。'),(4,NULL,'004',1,1,'2018-03-20 15:44:48','导线和避雷线有无断股、背花、腐蚀外力破坏造成的伤痕；导线接头是否良好、有无过热、严重氧化、腐蚀痕迹；导线对地、邻近建筑物或邻近树木的距离是否符合要求。'),(5,NULL,'005',1,1,'2018-03-20 15:42:16','绝缘子有无破裂、脏污、烧伤及闪络痕迹；绝缘子串偏斜程度、绝缘子铁件损坏情况如何。'),(6,NULL,'006',2,1,'2018-03-20 15:42:16','绝缘子有无破裂、脏污、烧伤及闪络痕迹；绝缘子串偏斜程度、绝缘子铁件损坏情况如何。'),(7,NULL,'007',3,1,NULL,'好好好好好好hhhh或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈'),(8,NULL,'008',3,1,NULL,'1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
+/*Table structure for table `document_manage` */
+
+DROP TABLE IF EXISTS `document_manage`;
+
+CREATE TABLE `document_manage` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '预案管理',
+  `no` varchar(100) DEFAULT NULL COMMENT '编号',
+  `poygon_id` int(10) DEFAULT NULL COMMENT '危控区id',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '维护人员',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `document_manage` */
+
+insert  into `document_manage`(`rid`,`no`,`poygon_id`,`name`,`oprt_id`,`create_time`,`remark`) values (1,NULL,26,'危控区13-测试预案',1,'2018-03-20 15:39:57',NULL),(2,NULL,2,'丽温2Q67线-#11防外力破坏-测试预案',2,'2018-03-20 15:40:57',NULL),(3,NULL,39,'让你死无葬身之地，哼，无耻小白脸！',1,NULL,NULL);
+
+/*Table structure for table `line` */
+
+DROP TABLE IF EXISTS `line`;
+
+CREATE TABLE `line` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '线路',
+  `type` int(1) DEFAULT NULL COMMENT '1 低压线路 2架空线路',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `path` longtext COMMENT '路径',
+  `voltage` varchar(100) DEFAULT NULL COMMENT '电压等级',
+  `dept_name` int(10) DEFAULT NULL COMMENT '维护部门',
+  `style` varchar(100) DEFAULT NULL COMMENT '样式',
+  `substation_rid` int(10) DEFAULT NULL COMMENT '变电站',
+  `x1` varchar(100) DEFAULT NULL COMMENT '线路最大x',
+  `x2` varchar(100) DEFAULT NULL COMMENT '最小x',
+  `y1` varchar(100) DEFAULT NULL COMMENT '线路最大y',
+  `y2` varchar(100) DEFAULT NULL COMMENT '最小y',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `line` */
+
+insert  into `line`(`rid`,`type`,`name`,`path`,`voltage`,`dept_name`,`style`,`substation_rid`,`x1`,`x2`,`y1`,`y2`) values (1,1,'3-#华联线','504544,3144058 504312,3144066 504096,3144066 503792,3144042 503568,3144018 503192,3143970 502880,3143962 502480,3143954 502328,3143898 502024,3143850 501720,3143794','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#442244\"}',1,'504544','501720','3144066','3143794'),(2,2,'#来了','497364,3140258 494964,3138050 494404,3137730 493708,3137370 494860,3136698 493372,3136394','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#4B8AF3\"}',1,'497364','493372','3140258','3136394'),(3,2,'#33','485468,3139738 485756,3139098 485836,3138714 485964,3138426','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#4B8AF3\"}',1,'485964','485468','3139738','3138426'),(4,1,'#44','489644,3135114 489788,3134826 489916,3134426','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#4B8AF3\"}',1,'489916','489644','3135114','3134426'),(5,1,'#55','502148,3138346 501956,3137978 501668,3137786 500836,3137002','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#4B8AF3\"}',1,'502148','500836','3138346','3137002'),(6,1,'#666','483860,3133002 483604,3132618 483460,3131994 483300,3131642 483108,3131162 482868,3130442 482052,3131306 491300,3128154','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#4B8AF3\"}',1,'491300','482052','3133002','3128154'),(7,2,'#777','477524,3138402 488756,3138114 502788,3138706','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#4B8AF3\"}',1,'502788','477524','3138706','3138114'),(8,1,'#888','488820,3142546 488980,3138402 489284,3132978','10',1,'{\"strokeWeight\":3,\"strokeColor\":\"#4B8AF3\"}',1,'489284','488820','3142546','3132978');
+
+/*Table structure for table `line_poygon` */
+
+DROP TABLE IF EXISTS `line_poygon`;
+
+CREATE TABLE `line_poygon` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '线路关联危控区',
+  `line_id` int(10) DEFAULT NULL COMMENT '线路id',
+  `poygon_id` int(10) DEFAULT NULL COMMENT '危控区id',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+/*Data for the table `line_poygon` */
+
+insert  into `line_poygon`(`rid`,`line_id`,`poygon_id`) values (1,1,26),(2,1,27),(3,1,28),(4,2,29),(5,2,30),(6,2,31),(7,3,32),(8,3,33),(9,3,34),(10,4,35),(11,4,36),(12,4,37),(13,5,38),(14,6,39),(15,7,40),(16,8,41),(17,8,42);
+
+/*Table structure for table `poygon` */
+
+DROP TABLE IF EXISTS `poygon`;
+
+CREATE TABLE `poygon` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '危控区',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `path` longtext COMMENT '路径',
+  `type` int(1) DEFAULT NULL COMMENT '类型',
+  `class` int(1) DEFAULT NULL COMMENT '等级',
+  `flag` int(3) DEFAULT NULL COMMENT '状态',
+  `dept_id` int(10) DEFAULT NULL COMMENT '维护班组',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '创建人',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `update_time` varchar(100) DEFAULT NULL COMMENT '修改时间',
+  `x1` varchar(100) DEFAULT NULL COMMENT '危控区的边界范围 最大x',
+  `x2` varchar(100) DEFAULT NULL COMMENT '最小x',
+  `y1` varchar(100) DEFAULT NULL COMMENT '最大y',
+  `y2` varchar(100) DEFAULT NULL COMMENT '最小y',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+
+/*Data for the table `poygon` */
+
+insert  into `poygon`(`rid`,`name`,`path`,`type`,`class`,`flag`,`dept_id`,`oprt_id`,`create_time`,`update_time`,`x1`,`x2`,`y1`,`y2`) values (26,'丽水-防汛危控区1','488076,3135190 488372,3135346 489212,3134502 488876,3134278 488076,3135190',1,1,128,NULL,NULL,'2018-03-22 09:51:34',NULL,'489212','488076','3135346','3134278'),(27,'丽水-防汛危控区2','492348,3133746 492868,3133258 493124,3133530 493228,3134138 493004,3134210 492412,3133938 492348,3133746',1,1,128,NULL,NULL,NULL,NULL,'493228','492348','3134210','3133258'),(28,'丽水-防汛危控区5','480708,3128362 480308,3127938 480060,3127562 480028,3127146 480204,3126650 480556,3126762 480404,3127498 480700,3127962 480708,3128362',1,1,128,NULL,NULL,NULL,NULL,'480708','480028','3128362','3126650'),(29,'丽水-防汛危控区3','492708,3125450 494788,3124554 495332,3125258 493156,3126154 492708,3125450',1,2,128,NULL,NULL,NULL,NULL,'495332','492708','3126154','3124554'),(30,'丽水-防汛危控区4','505604,3155594 508100,3154122 505860,3152906 504740,3153706 505604,3155594',1,3,128,NULL,NULL,NULL,NULL,'508100','504740','3155594','3152906'),(31,'丽水-树障危控区1','488708,3136990 488736,3136370 488836,3136382 488820,3137006 488708,3136990',2,3,128,NULL,NULL,NULL,NULL,'488836','488708','3137006','3136370'),(32,'丽水-树障危控区2','491932,3138810 491516,3139170 492556,3139258 492692,3138802 491684,3138762 491932,3138810',2,3,128,NULL,NULL,NULL,NULL,'492692','491516','3139258','3138762'),(33,'丽水-树障危控区3','474180,3129290 472932,3127018 475268,3126410 476484,3127946 475460,3129354 474180,3129290',2,1,128,NULL,NULL,NULL,NULL,'476484','472932','3129354','3126410'),(34,'丽水-防汛危控区6','494628,3139690 496548,3137162 498084,3138474 495940,3140458 494628,3139690',1,3,128,NULL,NULL,NULL,NULL,'498084','494628','3140458','3137162'),(35,'丽水-燃气危控区1','489772,3134750',3,2,128,NULL,NULL,NULL,NULL,'489772','489772','3134750','3134750'),(36,'丽水-燃气危控区2','492196,3138090',3,1,128,NULL,NULL,NULL,NULL,'492196','492196','3138090','3138090'),(37,'丽水-燃气危控区3','483300,3131626',3,3,128,NULL,NULL,NULL,NULL,'483300','483300','3131626','3131626'),(38,'丽水-燃气危控区4','508228,3139650',3,1,128,1,1,NULL,NULL,'508228','508228','3139650','3139650'),(39,'丽水-感应电危控区1','484764,3139442 485916,3139554 485948,3139762 486308,3139714 486228,3139562 486684,3139578 486516,3139282 484844,3139154 484764,3139442',4,3,128,NULL,NULL,NULL,NULL,'486684','484764','3139762','3139154'),(40,'丽水-感应电危控区2','474788,3150442 478308,3150794 478148,3149226 474564,3149002 474788,3150442',4,1,128,2,2,NULL,NULL,'478308','474564','3150794','3149002'),(41,'丽水-地质灾害危控区3','489804,3142866 489668,3142250 490332,3142242 490348,3142978 489804,3142866',6,2,128,1,1,NULL,NULL,'490348','489668','3142978','3142242'),(42,'丽水-地质灾害危控区1','500484,3137802 501940,3136842 502516,3137418 501108,3138314 500484,3137802',6,2,128,1,1,NULL,NULL,'502516','500484','3138314','3136842'),(43,'aaaaa','505604,3155594 508100,3154122 505860,3152906 504740,3153706 505604,3155594',1,2,128,NULL,NULL,NULL,NULL,'508100','504740','3155594','3152906');
+
+/*Table structure for table `poygon_lwh` */
+
+DROP TABLE IF EXISTS `poygon_lwh`;
+
+CREATE TABLE `poygon_lwh` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '危控区',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `path` longtext COMMENT '路径',
+  `type` int(1) DEFAULT NULL COMMENT '类型',
+  `class` int(1) DEFAULT NULL COMMENT '等级',
+  `flag` int(3) DEFAULT NULL COMMENT '状态',
+  `dept_id` int(10) DEFAULT NULL COMMENT '维护班组',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '创建人',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `update_time` varchar(100) DEFAULT NULL COMMENT '修改时间',
+  `x1` varchar(100) DEFAULT NULL COMMENT '危控区的边界范围 最大x',
+  `x2` varchar(100) DEFAULT NULL COMMENT '最小x',
+  `y1` varchar(100) DEFAULT NULL COMMENT '最大y',
+  `y2` varchar(100) DEFAULT NULL COMMENT '最小y',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+
+/*Data for the table `poygon_lwh` */
+
+insert  into `poygon_lwh`(`rid`,`name`,`path`,`type`,`class`,`flag`,`dept_id`,`oprt_id`,`create_time`,`update_time`,`x1`,`x2`,`y1`,`y2`) values (26,'丽水-防汛危控区1','488076,3135190 488372,3135346 489212,3134502 488876,3134278 488076,3135190',1,1,128,NULL,NULL,'2018-03-22 09:51:34',NULL,'489212','488076','3135346','3134278'),(27,'丽水-防汛危控区2','492348,3133746 492868,3133258 493124,3133530 493228,3134138 493004,3134210 492412,3133938 492348,3133746',1,1,128,NULL,NULL,NULL,NULL,'493228','492348','3134210','3133258'),(28,'丽水-防汛危控区2','480708,3128362 480308,3127938 480060,3127562 480028,3127146 480204,3126650 480556,3126762 480404,3127498 480700,3127962 480708,3128362',1,1,128,NULL,NULL,NULL,NULL,'480708','480028','3128362','3126650'),(29,'丽水-防汛危控区3','492708,3125450 494788,3124554 495332,3125258 493156,3126154 492708,3125450',1,2,128,NULL,NULL,NULL,NULL,'495332','492708','3126154','3124554'),(30,'丽水-防汛危控区4','505604,3155594 508100,3154122 505860,3152906 504740,3153706 505604,3155594',1,3,128,NULL,NULL,NULL,NULL,'508100','504740','3155594','3152906'),(31,'丽水-树障危控区1','488708,3136990 488736,3136370 488836,3136382 488820,3137006 488708,3136990',2,3,128,NULL,NULL,NULL,NULL,'488836','488708','3137006','3136370'),(32,'丽水-树障危控区2','491932,3138810 491516,3139170 492556,3139258 492692,3138802 491684,3138762 491932,3138810',2,3,128,NULL,NULL,NULL,NULL,'492692','491516','3139258','3138762'),(33,'丽水-树障危控区3','474180,3129290 472932,3127018 475268,3126410 476484,3127946 475460,3129354 474180,3129290',2,1,128,NULL,NULL,NULL,NULL,'476484','472932','3129354','3126410'),(34,'丽水-防汛危控区5','494628,3139690 496548,3137162 498084,3138474 495940,3140458 494628,3139690',1,3,128,NULL,NULL,NULL,NULL,'498084','494628','3140458','3137162'),(35,'丽水-燃气危控区1','489772,3134750',3,2,128,NULL,NULL,NULL,NULL,'489772','489772','3134750','3134750'),(36,'丽水-燃气危控区2','492196,3138090',3,1,128,NULL,NULL,NULL,NULL,'492196','492196','3138090','3138090'),(37,'丽水-燃气危控区3','483300,3131626',3,3,128,NULL,NULL,NULL,NULL,'483300','483300','3131626','3131626'),(38,'丽水-燃气危控区4','508228,3139650',3,1,128,1,1,NULL,NULL,'508228','508228','3139650','3139650'),(39,'丽水-感应电危控区1','484764,3139442 485916,3139554 485948,3139762 486308,3139714 486228,3139562 486684,3139578 486516,3139282 484844,3139154 484764,3139442',4,3,128,NULL,NULL,NULL,NULL,'486684','484764','3139762','3139154'),(40,'丽水-感应电危控区2','474788,3150442 478308,3150794 478148,3149226 474564,3149002 474788,3150442',4,1,128,2,2,NULL,NULL,'478308','474564','3150794','3149002'),(41,'丽水-地质灾害危控区3','489804,3142866 489668,3142250 490332,3142242 490348,3142978 489804,3142866',6,2,128,1,1,NULL,NULL,'490348','489668','3142978','3142242'),(42,'丽水-地质灾害危控区1','500484,3137802 501940,3136842 502516,3137418 501108,3138314 500484,3137802',6,2,128,1,1,NULL,NULL,'502516','500484','3138314','3136842');
+
+/*Table structure for table `poygon_type` */
+
+DROP TABLE IF EXISTS `poygon_type`;
+
+CREATE TABLE `poygon_type` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '危控区类型',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `en_name` varchar(30) DEFAULT NULL COMMENT '名称',
+  `stroke` varchar(100) DEFAULT NULL COMMENT '边框线颜色',
+  `strokeOpacity` varchar(100) DEFAULT NULL COMMENT '边框线透明度 0-1',
+  `strokeWidth` varchar(100) DEFAULT NULL COMMENT '边框线宽度',
+  `fill` varchar(100) DEFAULT NULL COMMENT '填充颜色 背景色',
+  `fillOpacity` varchar(100) DEFAULT NULL COMMENT '背景色透明度',
+  `icon` varchar(100) DEFAULT NULL COMMENT '图标地址',
+  `order` int(10) DEFAULT NULL COMMENT '绘制顺序',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+/*Data for the table `poygon_type` */
+
+insert  into `poygon_type`(`rid`,`name`,`en_name`,`stroke`,`strokeOpacity`,`strokeWidth`,`fill`,`fillOpacity`,`icon`,`order`) values (1,'防汛危控区','fx_poygon_g','#51C332','1','1','#51C332','0.5',NULL,1),(2,'树障危控区','sz_poygon_g','#B6C1D2','1','1','#B6C1D2','0.5',NULL,4),(3,'燃气危控区','rq_poygon_g',NULL,NULL,NULL,NULL,NULL,'rq.png',20),(4,'感应电危控区','gyd_poygon_g','#DB4F43','1','1','#DB4F43','0.5',NULL,8),(5,'危化品危控区','whp_poygon_g',NULL,NULL,NULL,NULL,NULL,'whp.png',24),(6,'地质灾害危控区','zddh_poygon_g','#FECC42','1','1','#FECC42','0.5',NULL,11);
+
+/*Table structure for table `substation` */
+
+DROP TABLE IF EXISTS `substation`;
+
+CREATE TABLE `substation` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '变电站',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `x` varchar(100) DEFAULT NULL COMMENT '坐标',
+  `y` varchar(100) DEFAULT NULL,
+  `dept_name` int(10) DEFAULT NULL COMMENT '维护部门',
+  `voltage` varchar(100) DEFAULT NULL COMMENT '电压等级',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `substation` */
+
+/*Table structure for table `sys_map_object` */
+
+DROP TABLE IF EXISTS `sys_map_object`;
+
+CREATE TABLE `sys_map_object` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '设备对应层级',
+  `obj_name` varchar(100) DEFAULT NULL COMMENT '设备名称',
+  `type` int(11) DEFAULT NULL COMMENT '类型',
+  `zindex` int(10) DEFAULT NULL COMMENT '设备>=层级就展示',
+  `remark` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+/*Data for the table `sys_map_object` */
+
+insert  into `sys_map_object`(`rid`,`obj_name`,`type`,`zindex`,`remark`) values (1,'transformer',NULL,12,'变压器'),(2,'line',1,12,'低压线路'),(3,'poygon',NULL,7,'危控区'),(4,'line',2,7,'架空线路'),(5,'switch',NULL,12,'开关站');
+
+/*Table structure for table `transformer` */
+
+DROP TABLE IF EXISTS `transformer`;
+
+CREATE TABLE `transformer` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '变压器',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `x` varchar(100) DEFAULT NULL COMMENT '坐标',
+  `y` varchar(100) DEFAULT NULL,
+  `dept_id` int(10) DEFAULT NULL COMMENT '维护部门',
+  `voltage` varchar(100) DEFAULT NULL COMMENT '电压等级',
+  `x1` varchar(100) DEFAULT NULL COMMENT '最大范围x',
+  `x2` varchar(100) DEFAULT NULL COMMENT '最小x',
+  `y1` varchar(100) DEFAULT NULL COMMENT '最大范围y',
+  `y2` varchar(100) DEFAULT NULL COMMENT '最小y',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `transformer` */
+
+insert  into `transformer`(`rid`,`name`,`x`,`y`,`dept_id`,`voltage`,`x1`,`x2`,`y1`,`y2`) values (1,'#变压器1111','497012','3142698',1,'10','497012','497012','3142698','3142698'),(2,'#变压器222','498012','3152698',1,'10','498012','498012','3152698','3152698'),(3,'#变压器333','499012','3162698',1,'10','499012','499012','3162698','3162698'),(4,'#变压器444','487060','3136218',1,'10','487060','487060','3136218','3136218'),(5,'#变压器555','482164','3140874',1,'10','482164','482164','3140874','3140874'),(6,'#变压器666','488564','3137642',1,'10','488564','488564','3137642','3137642'),(7,'#变压器777','481284','3132826',1,'10','481284','481284','3132826','3132826'),(8,'#变压器888','497188 ','3151114',1,'10','497188 ','497188 ','3151114','3151114');
+
+/*Table structure for table `transformer_poygon` */
+
+DROP TABLE IF EXISTS `transformer_poygon`;
+
+CREATE TABLE `transformer_poygon` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '变压器关联危控区',
+  `transformer_id` int(10) NOT NULL COMMENT '变压器id',
+  `poygon_id` int(10) NOT NULL COMMENT '危控区id',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+/*Data for the table `transformer_poygon` */
+
+insert  into `transformer_poygon`(`rid`,`transformer_id`,`poygon_id`) values (1,1,26),(2,1,27),(3,1,28),(4,2,29),(5,2,30),(6,2,31),(7,3,32),(8,3,33),(9,4,34),(10,4,35),(11,5,36),(12,6,37),(13,7,38),(14,7,39),(15,8,40),(16,8,41);
+
+/* Function  structure for function  `func_splitString` */
+
+/*!50003 DROP FUNCTION IF EXISTS `func_splitString` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`%` FUNCTION `func_splitString`( f_string VARCHAR(1000),f_delimiter VARCHAR(5),f_order INT) RETURNS varchar(255) CHARSET utf8
+BEGIN   
+  -- func_splitString('1,2,3,4,5,6,7',',',1) 分割字符
+DECLARE result VARCHAR(255) DEFAULT '';   
+SET result = REVERSE(SUBSTRING_INDEX(REVERSE(SUBSTRING_INDEX(f_string,f_delimiter,f_order)),f_delimiter,1));  
+RETURN result;   
+END */$$
+DELIMITER ;
+
+/* Function  structure for function  `f_lineintoline` */
+
+/*!50003 DROP FUNCTION IF EXISTS `f_lineintoline` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`%` FUNCTION `f_lineintoline`(p_a varchar(255),p_b VARCHAR(255)) RETURNS int(11)
+begin
+    -- 线段相交
+    DECLARE len int default 0;  -- 线路 可以拆分出的所有线段
+    DECLARE len_s INT DEFAULT 0;-- 屏幕可视范围 可以拆分出的所有线段
+    -- 设备(危控区、线路) 需要拆分出的点
+    DECLARE p_i INT DEFAULT 1;
+    DECLARE p_next INT DEFAULT 1;
+    DECLARE p_x VARCHAR(100);
+    DECLARE p_y VARCHAR(100);
+    -- 屏幕可视范围 需要拆分出的点
+    DECLARE p_bi INT DEFAULT 1;
+    DECLARE p_bnext INT DEFAULT 1;
+    DECLARE p_bx VARCHAR(100);
+    DECLARE p_by VARCHAR(100);
+    -- 返回结果
+    declare result int default 0;
+    
+    SELECT LENGTH(p_a) - LENGTH(REPLACE (p_a, ' ', '')) INTO len;
+    SELECT LENGTH(p_b) - LENGTH(REPLACE (p_b, ' ', '')) INTO len_s;
+    -- set len_s = len_s+2;
+    WHILE len>0 DO
+       SET p_next = p_i+1;
+       SELECT func_splitString(p_a,' ',p_i) INTO p_x;
+       SELECT func_splitString(p_a,' ',p_next) INTO p_y;
+       
+       -- set path = concat(p_x,' ',p_y);
+       while len_s <>0 do
+           SET p_bnext = p_bi+1;
+           SELECT func_splitString(p_b,' ',p_bi) INTO p_bx;
+           SELECT func_splitString(p_b,' ',p_bnext) INTO p_by;
+           
+           SET p_bi = p_bi+1;
+	   SET len_s = len_s-1;
+           set result = f_segmentsIntr(p_x,p_y,p_bx,p_by); -- 判断是否相交
+           IF (result=1) THEN
+		SET len_s = 0;
+		SET len = 0;
+           END IF;
+       end while;
+       -- 重置循环
+       if len_s=0 then 
+           SELECT LENGTH(p_b) - LENGTH(REPLACE (p_b, ' ', '')) INTO len_s;
+           SET p_bnext = 1;
+           set p_bi = 1;
+       end if;
+       SET p_i = p_i+1;
+       SET len = len-1;
+    END WHILE;
+    return result;
+end */$$
+DELIMITER ;
+
+/* Function  structure for function  `f_segmentsIntr` */
+
+/*!50003 DROP FUNCTION IF EXISTS `f_segmentsIntr` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`%` FUNCTION `f_segmentsIntr`(p_a VARCHAR(255),p_b VARCHAR(255),p_c varchar(255),p_d VARCHAR(255)) RETURNS int(11)
+BEGIN
+    -- p_a 点的坐标
+    declare p_ax int;
+    declare p_ay int;
+    -- p_b 点的坐标
+    DECLARE p_bx INT;
+    DECLARE p_by INT;
+    -- p_c 点的坐标
+    DECLARE p_cx INT;
+    DECLARE p_cy INT;
+    -- p_d 点的坐标
+    DECLARE p_dx INT;
+    DECLARE p_dy INT;
+    -- 三角形abc 面积的2倍
+    declare area_abc int default 0;
+    -- 三角形abd 面积的2倍
+    declare area_abd int default 0;
+    -- 三角形cda 面积的2倍
+    declare area_cda int default 0;
+    
+    declare area_cdb int default 0;
+    
+    -- a坐标拆分
+    SELECT func_splitString(p_a,',',1) INTO p_ax;
+    SELECT func_splitString(p_a,',',2) INTO p_ay;
+    -- b坐标拆分
+    SELECT func_splitString(p_b,',',1) INTO p_bx;
+    SELECT func_splitString(p_b,',',2) INTO p_by;
+    -- c点坐标拆分
+    SELECT func_splitString(p_c,',',1) INTO p_cx;
+    SELECT func_splitString(p_c,',',2) INTO p_cy;
+    -- d点坐标拆分
+    SELECT func_splitString(p_d,',',1) INTO p_dx;
+    SELECT func_splitString(p_d,',',2) INTO p_dy;
+    
+    -- 三角形abc 面积的2倍
+    set area_abc = (p_ax - p_cx) * (p_by - p_cy) - (p_ay - p_cy) * (p_bx - p_cx);
+    -- 三角形abd 面积的2倍
+    set area_abd = (p_ax - p_dx) * (p_by - p_dy) - (p_ay - p_dy) * (p_bx - p_dx);
+    -- 面积符号相同则两点在线段同侧,不相交 (对点在线段上的情况,本例当作不相交处理)
+    if ( area_abc*area_abd>=0 ) then
+	return 0;
+    end if;
+    -- 三角形cda 面积的2倍
+    set area_cda = (p_cx - p_ax) * (p_dy - p_ay) - (p_cy - p_ay) * (p_dx - p_ax);
+    -- 三角形cdb 面积的2倍 
+    -- 注意: 这里有一个小优化.不需要再用公式计算面积,而是通过已知的三个面积加减得出
+    set area_cdb = area_cda + area_abc - area_abd ;
+    if (area_cda * area_cdb >= 0) then 
+	return 0;  
+    end if;
+    -- 这里可以计算交点坐标
+    RETURN 1;
+END */$$
+DELIMITER ;
+
+/*Table structure for table `v_line_type` */
+
+DROP TABLE IF EXISTS `v_line_type`;
+
+/*!50001 DROP VIEW IF EXISTS `v_line_type` */;
+/*!50001 DROP TABLE IF EXISTS `v_line_type` */;
+
+/*!50001 CREATE TABLE  `v_line_type`(
+ `rid` int(11) ,
+ `name` varchar(100) 
+)*/;
+
+/*Table structure for table `v_poygon_class` */
+
+DROP TABLE IF EXISTS `v_poygon_class`;
+
+/*!50001 DROP VIEW IF EXISTS `v_poygon_class` */;
+/*!50001 DROP TABLE IF EXISTS `v_poygon_class` */;
+
+/*!50001 CREATE TABLE  `v_poygon_class`(
+ `rid` bigint(20) ,
+ `name` varchar(2) 
+)*/;
+
+/*Table structure for table `v_poygon_type` */
+
+DROP TABLE IF EXISTS `v_poygon_type`;
+
+/*!50001 DROP VIEW IF EXISTS `v_poygon_type` */;
+/*!50001 DROP TABLE IF EXISTS `v_poygon_type` */;
+
+/*!50001 CREATE TABLE  `v_poygon_type`(
+ `rid` int(10) ,
+ `name` varchar(100) 
+)*/;
+
+/*View structure for view v_line_type */
+
+/*!50001 DROP TABLE IF EXISTS `v_line_type` */;
+/*!50001 DROP VIEW IF EXISTS `v_line_type` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_line_type` AS select `sys_map_object`.`type` AS `rid`,`sys_map_object`.`remark` AS `name` from `sys_map_object` where (`sys_map_object`.`obj_name` = 'line') */;
+
+/*View structure for view v_poygon_class */
+
+/*!50001 DROP TABLE IF EXISTS `v_poygon_class` */;
+/*!50001 DROP VIEW IF EXISTS `v_poygon_class` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_poygon_class` AS select 1 AS `rid`,'安全' AS `name` union all select 2 AS `rid`,'中危' AS `NAME` union all select 3 AS `rid`,'高危' AS `NAME` */;
+
+/*View structure for view v_poygon_type */
+
+/*!50001 DROP TABLE IF EXISTS `v_poygon_type` */;
+/*!50001 DROP VIEW IF EXISTS `v_poygon_type` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_poygon_type` AS (select `poygon_type`.`rid` AS `rid`,`poygon_type`.`name` AS `name` from `poygon_type`) */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

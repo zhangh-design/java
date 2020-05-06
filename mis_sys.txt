@@ -1,0 +1,180 @@
+/*
+SQLyog Ultimate v11.27 (32 bit)
+MySQL - 5.7.17-log : Database - mis_sys
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`mis_sys` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `mis_sys`;
+
+/*Table structure for table `department` */
+
+DROP TABLE IF EXISTS `department`;
+
+CREATE TABLE `department` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '部门',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `no` varchar(100) DEFAULT NULL COMMENT '编号',
+  `short` varchar(50) DEFAULT NULL COMMENT '简称',
+  `prid` int(10) DEFAULT NULL COMMENT '上级部门',
+  `flag` int(3) DEFAULT NULL COMMENT '状态',
+  `oprt_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '创建人',
+  `oprt_name` varchar(100) DEFAULT NULL COMMENT '创建人名称',
+  `seq_no` int(10) DEFAULT NULL COMMENT '排序',
+  `tel` varchar(100) DEFAULT NULL COMMENT '联系电话',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `department` */
+
+insert  into `department`(`rid`,`name`,`no`,`short`,`prid`,`flag`,`oprt_time`,`oprt_id`,`oprt_name`,`seq_no`,`tel`) values (1,'市公司','335010000','市公司',0,128,'2018-03-02 14:22:50',1,'admin',1,NULL),(2,'莲都区','335010100','莲都区',1,128,'2018-03-02 14:23:26',1,'admin',2,NULL);
+
+/*Table structure for table `module` */
+
+DROP TABLE IF EXISTS `module`;
+
+CREATE TABLE `module` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '模块',
+  `name` varchar(100) DEFAULT NULL COMMENT '模块名称',
+  `module_id` int(10) DEFAULT NULL COMMENT '模块id',
+  `jspath` varchar(100) DEFAULT NULL COMMENT '模块对应js路径',
+  `classname` varchar(100) DEFAULT NULL COMMENT 'css样式类',
+  `icon` varchar(50) DEFAULT NULL COMMENT 'icon图标',
+  `seq_no` int(3) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `module` */
+
+insert  into `module`(`rid`,`name`,`module_id`,`jspath`,`classname`,`icon`,`seq_no`) values (1,'可视化展示',1001,'module.show.show','menu-show','show-icon',1),(2,'维护管理',1002,'module.manage.manage','menu-manage','manage-icon',2);
+
+/*Table structure for table `operator` */
+
+DROP TABLE IF EXISTS `operator`;
+
+CREATE TABLE `operator` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '人员',
+  `no` varchar(100) DEFAULT NULL COMMENT '编号',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `password` varchar(100) DEFAULT NULL COMMENT '密码',
+  `address` varchar(100) DEFAULT NULL COMMENT '地址',
+  `phone` varchar(50) DEFAULT NULL COMMENT '电话',
+  `sex` int(1) DEFAULT '1' COMMENT '性别 1男 0女',
+  `seq_no` int(2) DEFAULT NULL COMMENT '排序',
+  `flag` int(3) DEFAULT NULL COMMENT '状态',
+  `oprt_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '创建人',
+  `oprt_name` varchar(100) DEFAULT NULL COMMENT '创建人名称',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `operator` */
+
+insert  into `operator`(`rid`,`no`,`name`,`password`,`address`,`phone`,`sex`,`seq_no`,`flag`,`oprt_time`,`oprt_id`,`oprt_name`) values (1,'admin','管理员','+p2iIR+IDxA=',NULL,NULL,1,1,128,'2018-02-26 11:43:28',NULL,NULL),(2,'user','普通人员','+p2iIR+IDxA=',NULL,NULL,1,2,128,'2018-03-02 14:23:26',NULL,NULL);
+
+/*Table structure for table `oprt_dept` */
+
+DROP TABLE IF EXISTS `oprt_dept`;
+
+CREATE TABLE `oprt_dept` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '人员部门关联表',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '人员id',
+  `dept_id` int(10) DEFAULT NULL COMMENT '部门id',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `oprt_dept` */
+
+insert  into `oprt_dept`(`rid`,`oprt_id`,`dept_id`) values (1,1,1),(2,2,2);
+
+/*Table structure for table `oprt_role` */
+
+DROP TABLE IF EXISTS `oprt_role`;
+
+CREATE TABLE `oprt_role` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '人员角色关联表',
+  `oprt_id` int(10) DEFAULT NULL COMMENT '人员',
+  `role_id` int(10) DEFAULT NULL COMMENT '角色',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `oprt_role` */
+
+insert  into `oprt_role`(`rid`,`oprt_id`,`role_id`) values (1,1,1),(2,2,2),(3,1,2);
+
+/*Table structure for table `permission` */
+
+DROP TABLE IF EXISTS `permission`;
+
+CREATE TABLE `permission` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '权限',
+  `permission_name` varchar(100) DEFAULT NULL COMMENT '权限名称',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `update_time` varchar(100) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `permission` */
+
+insert  into `permission`(`rid`,`permission_name`,`create_time`,`update_time`) values (1,'user:create','2018-02-28 18:18:03','2018-02-28 18:18:03'),(2,'user:view','2018-02-28 18:18:03','2018-02-28 18:18:03');
+
+/*Table structure for table `role` */
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '角色',
+  `role_name` varchar(100) DEFAULT NULL COMMENT '角色名称',
+  `create_time` varchar(100) DEFAULT NULL COMMENT '创建时间',
+  `update_time` varchar(100) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `role` */
+
+insert  into `role`(`rid`,`role_name`,`create_time`,`update_time`) values (1,'admin','2018-02-26 11:47:48',NULL),(2,'user','2018-02-26 11:47:48',NULL);
+
+/*Table structure for table `role_module` */
+
+DROP TABLE IF EXISTS `role_module`;
+
+CREATE TABLE `role_module` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '角色对应模块',
+  `role_id` int(10) DEFAULT NULL COMMENT '角色id',
+  `module_id` int(10) DEFAULT NULL COMMENT '模块id',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `role_module` */
+
+insert  into `role_module`(`rid`,`role_id`,`module_id`) values (1,1,1),(2,1,2),(3,2,1);
+
+/*Table structure for table `role_permission` */
+
+DROP TABLE IF EXISTS `role_permission`;
+
+CREATE TABLE `role_permission` (
+  `rid` int(10) NOT NULL AUTO_INCREMENT COMMENT '角色权限关联表',
+  `permission_rid` int(10) DEFAULT NULL COMMENT '权限',
+  `role_id` int(10) DEFAULT NULL COMMENT '角色',
+  PRIMARY KEY (`rid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `role_permission` */
+
+insert  into `role_permission`(`rid`,`permission_rid`,`role_id`) values (1,1,1),(2,2,1),(3,2,2);
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<!-- 字符编码过滤器 -->
+	<!-- 注意在tomact环境中,此配置只针对post,get请求需要在tomact的server.xml添加URIEncoding="UTF-8" 
+		<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443" 
+		URIEncoding="UTF-8"/> -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern> <!-- 拦截所有http请求 -->
+	</filter-mapping>
+	<!-- 使用gzip优化前端web应用 -->
+	<filter>
+		<filter-name>GZIPFilter</filter-name>
+		<filter-class>com.tacitknowledge.filters.gzipfilter.GZIPFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+	<!-- spring中防止内存泄露的监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<!-- 在controller中获取request和session对象-->
+	<listener>    
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<!-- 加载Spring主配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/spring/spring-context.xml,classpath:/shiro/spring-shiro.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 添加logback日志监听器 -->  
+	<context-param>  
+	    <param-name>logbackConfigLocation</param-name>  
+	    <param-value>classpath:/logback/logback-spring.xml</param-value>
+	</context-param>  
+	<listener>  
+	    <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>  
+	</listener>
+	<!-- 过滤静态资源 -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.jpg</url-pattern>
+		<url-pattern>*.jpeg</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+		<url-pattern>*.ico</url-pattern>
+		<url-pattern>*.doc</url-pattern>
+		<url-pattern>*.pdf</url-pattern>
+		<url-pattern>*.swf</url-pattern>
+		<url-pattern>*.ttf</url-pattern>
+		<url-pattern>*.woff</url-pattern>
+		<url-pattern>*.woff2</url-pattern>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>
+	<!-- Spring MVC主控Servlet -->
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+	      <param-name>contextConfigLocation</param-name>
+	      <param-value>classpath*:/spring/spring-mvc.xml</param-value>
+	    </init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- shiro过滤器 -->
+	<filter> 
+	    <filter-name>shiroFilter</filter-name>  
+	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
+	    <init-param>  
+	        <param-name>targetFilterLifecycle</param-name>  
+	        <param-value>true</param-value>  
+	    </init-param>  
+	</filter>
+	<filter-mapping>
+	    <filter-name>shiroFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<welcome-file-list>
+		<welcome-file>/hello.htm</welcome-file>
+	</welcome-file-list>
+	<display-name>Archetype Created Web Application</display-name>
+</web-app>

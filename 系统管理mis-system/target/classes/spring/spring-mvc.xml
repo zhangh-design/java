@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- 扫描类包 启用注解 -->
+	<!-- 此处只扫描@controller的注解,如果同时扫描@service事务将无法加入 -->
+	<context:component-scan base-package="com.user" name-generator="com.system.spring.UserAnnotationBeanNameGenerator">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+    
+    <!-- 当我们需要controller返回一个map的json对象时,可以设定<mvc:annotation-driven /> -->
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
+	<!-- 配置视图解析器，将ModelAndView及字符串解析为具体的页面 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/jsp/"
+		p:suffix=".jsp" />
+    
+	<!-- 设定字符集和json处理类 -->
+	<!-- 采用SpringMVC自带的JSON转换工具，支持@ResponseBody注解 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonHttpMessageConverter" />
+				<ref bean="bufferedImageConverter" />
+				<ref bean="byteArrayConverter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="bufferedImageConverter" class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
+	<bean id="byteArrayConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+    <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+		<property name="supportedMediaTypes">  
+			<list>  
+				<value>text/html; charset=UTF-8</value>  
+				<value>application/json;charset=UTF-8</value>  
+			</list>  
+		</property>
+	</bean> 
+	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html; charset=UTF-8</value>  
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 以.html为后缀名访问，默认返回数据类型是 text/html， 所以要修改返回的数据类型 -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"> 
+        <property name="mediaTypes">  
+            <map>  
+                <entry key="html" value="application/json;charset=UTF-8"/> 
+            </map>  
+        </property> 
+    </bean>
+    <!-- web请求拦截器 
+    	注意：和shiro一起使用时,spring的拦截器调用顺序会优先于shiro的拦截器,通过设置order注解应该可以调整顺序
+     -->
+    <mvc:interceptors>
+    	<mvc:interceptor>
+            <mvc:mapping path="/system/**/read*/*"/>
+			<mvc:mapping path="/system/**/do*/*"/>
+			<mvc:mapping path="/user/**/read*/*"/>
+			<mvc:mapping path="/user/**/do*/*"/>
+            <bean class="com.system.interceptor.springmvc.UserMvcInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

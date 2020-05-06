@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 记录堆栈异常,如果在运行期内没有异常将不会创建日志文件 -->
+	<!-- 尽量别用绝对路径，如果带参数不同容器路径解释可能不同 -->
+	<property name="log.moduleName" value="logs" />  <!-- 模块名称， 影响日志配置名，日志文件名 -->
+	<property name="log.max.size" value="20MB" />
+	
+	<!--控制台输出-->
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread]%logger{56}.%method\(\):%L -%msg%n</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="file.all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 支持多JVM同时操作同一个日志文件
+		业务上出现了多个jvm同时操作同一个日志文件，仍建议每个jvm只操作一个日志文件。
+        <prudent>true</prudent> -->  
+        <!--<File>${catalina.base}/${log.moduleName}.log</File> 设置日志不超过${log.max.size}时的保存路径,${catalina.base}根目录 -->  
+        <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。-->  
+        <!--当有异常产生时,以每天生成一个日志文件的形式记录,最大保存时间为30天,如果没有异常记录触发,日志不会自动删除 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${catalina.base}/archive/${log.moduleName}_all_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern> 
+            <maxHistory>30</maxHistory>
+            <!-- 当天的日志大小 超过${log.max.size}时,压缩日志并保存 默认值为10MB -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${log.max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>  
+        <!-- 日志输出的文件的格式  -->  
+        <layout class="ch.qos.logback.classic.PatternLayout"> 
+        	<charset>UTF-8</charset>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]%logger{56}.%method:%L -%msg%n</pattern>  
+        </layout>
+    </appender>
+	
+	<!-- ERROR > WARN > INFO > DEBUG > TRACE -->
+	<root level="DEBUG">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="file.all" />
+	</root>
+</configuration>

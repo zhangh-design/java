@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+    		http://www.springframework.org/schema/context 
+    		http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    
+    <!-- dbcp datasource数据源配置 
+	<import resource="classpath:/daosource/dbcp.xml"/>-->
+    <!-- druid datasource数据源配置 -->
+	<import resource="classpath:/daosource/druid.xml"/>
+	
+	<!-- Spring多数据源配置 -->
+	<bean id="dataSource" class="com.system.spring.UserDynamicDataSource" >
+		<property name="targetDataSources">
+			<map>
+                <entry value-ref="dataSourceMaster" key="Master"></entry>
+                <entry value-ref="dataSourceSlaver" key="Slaver"></entry>
+            </map>
+		</property>
+		<!-- 默认数据源 -->
+		<property name="defaultTargetDataSource" ref="dataSourceMaster" />
+	</bean>
+	
+	<!-- 定义 DBCP 数据源的 JDBC 本地对象抽取器 https://www.ibm.com/developerworks/cn/java/j-lo-spring-lob/-->
+	<bean id="nativeJdbcExtractor"
+		class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor"
+		lazy-init="true" />
+	
+	<!-- 配置Jdbc模板  -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource" 
+		p:nativeJdbcExtractor-ref="nativeJdbcExtractor"/>
+	<bean id="namedParamJdbcTemplate" 
+	      class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	      <constructor-arg ref="dataSource"/>
+	</bean>
+	
+	<!-- 如果底层数据库是 DB2、SQL Server、MySQL 等非 Oracle 的其它数据库，则只要简单配置一个DefaultLobHandler -->
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"
+		lazy-init="true" />
+	<!-- 获取Oracle的本地Connection实例后
+		就可以使用该对象的一些特有功能了，如使用OracleConnection对Lob对象的操作
+	 -->
+	<bean id="oracleLobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler"
+		lazy-init="true" 
+		p:nativeJdbcExtractor-ref="nativeJdbcExtractor"/>
+</beans>
+
+

@@ -1,0 +1,32 @@
+﻿create or replace function lsgq_heat.f_get_userinfo_simpleaddr(useraddr varchar2)
+return varchar2
+as
+simpleaddr varchar2(1000);
+addr_xq_index number;
+addr_eq_index number;
+addr_sc_index number;
+addr_p_index number;
+/*低压用户 地址处理*/
+begin
+select instr(useraddr,'小区',1,1) into addr_xq_index from dual;
+select instr(useraddr,'二区',1,1) into addr_eq_index from dual;
+select instr(useraddr,'商城',1,1) into addr_sc_index from dual;
+if addr_xq_index>0 then
+  select substr(useraddr,0,addr_xq_index+1) into simpleaddr from dual;
+end if;
+if addr_eq_index>0 then
+  select substr(useraddr,0,addr_eq_index+1) into simpleaddr from dual;
+end if;
+if addr_sc_index>0 then
+  select substr(useraddr,0,addr_sc_index+1) into simpleaddr from dual;
+end if;
+
+if simpleaddr is null then
+  simpleaddr :=useraddr;
+end if;
+select instr(simpleaddr,'浙江省丽水市',1,1) into addr_p_index from dual;
+if addr_p_index>0 then 
+  select replace(simpleaddr,'浙江省丽水市','') into simpleaddr from dual;
+end if;
+return(simpleaddr);
+end;

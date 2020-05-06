@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+                        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"  
+    default-lazy-init="true">
+    <description>Spring Shiro configuration</description>
+	<!-- shiro核心类securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
+        <property name="realm" ref="myShiroRealm" />
+    </bean>
+    <!-- 自定义的Realm -->
+    <bean id="myShiroRealm" class="com.system.shiro.UserShiroRealm"/>
+	
+	<bean id="mylogoutFilter" class="com.system.shiro.SystemLogoutFilter">  
+      <property name="redirectUrl" value="/admin/login"/>
+  	</bean>
+  	<bean id="userRolesAuthorizationFilter" class="com.system.shiro.UserRolesAuthorizationFilter" />
+  	
+    <!-- Shiro Filter 拦截器相关配置,shiro的spring注解功能未启用 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- securityManager -->
+        <property name="securityManager" ref="securityManager" />
+        <!-- 登录路径 -->
+        <property name="loginUrl" value="/index.htm" /> <!-- value="user.html" -->
+        <!-- 用户访问无权限的链接时跳转此页面  -->
+        <property name="unauthorizedUrl" value="/unauthorizedUrl.html" />
+        <!-- 自定义拦截器 -->
+        <property name="filters">
+			<map>
+				<!-- 修改默认权限过滤器 -->
+				<entry key="roles" value-ref="userRolesAuthorizationFilter" />
+            	<!-- 退出过滤器 -->
+                <entry key="logout" value-ref="mylogoutFilter" />
+			</map>
+		</property>
+        <!-- 过滤链定义 -->
+        <!-- anon 不需要授权即可访问,对于静态资源,访问权限都设置为anon
+        	 anthc 需要登录才可访问
+        	 /userList=roles[admin] 访问/userList需要有admin这个角色,如果没有此角色访问此URL会返回无授权页面
+        	 /**/userList=roles["user,admin"] 满足 user、admin任意一个角色既可进入系统
+        	 /userList=authc,perms[userList] 访问/userList需要登录并且需要有userList的权限,要是没分配此权限访问此URL会返回无授权页面
+        	 
+        	 通过httpinvoker实现远程服务调用需要配置/**/httpinvoker/**=anon 权限，将远程调用的请求都无条件放过
+        	如果是通过rmi服务则不需要配置
+        -->
+        <property name="filterChainDefinitions">
+            <value>
+            	<!-- 访问 -->
+                /login.html=anon
+                /logout=logout
+                <!-- 资源文件 -->
+                /**/*.css=anon
+                /**/images/**=anon
+                /**/*.htm=anon
+                /**/*.js=anon
+                <!-- base配置 -->
+                /**/upload/**=anon
+                /**/httpinvoker/**=anon
+                <!-- 项目配置 -->
+                /**/userList=roles["user,admin"]
+                <!-- /userList=authc,perms[/userList] -->
+                /**/toDeleteUser=authc,perms[user:view]
+               	<!-- /**/read/lspolygon/**=roles["user,admin"]
+                /**/update/lspolygon/**=roles["admin"] -->
+                /**/read/lspolygon/**=anon
+                /**/update/lspolygon/**=anon
+                 <!-- /**/read/** = anon
+                 /**/update/** = anon -->
+                
+                <!-- /**=authc 表示所有的url都必须认证通过才可以访问 -->
+                /** = authc
+             </value>
+        </property>
+	</bean>
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+</beans>
+
+
+
